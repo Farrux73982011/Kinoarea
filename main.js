@@ -1,4 +1,4 @@
-let base_url = "https://api.themoviedb.org/3"
+export let base_url = "https://api.themoviedb.org/3"
 let cont = document.querySelector('.container')
 let cont2 = document.querySelector('.container2')
 let show_all = document.querySelector(".show_all")
@@ -48,6 +48,9 @@ function reload(arr, place) {
         hover.append(button)
         vote_average.append(vote_average_h1)
 
+        div.onclick = () => {
+            location.assign('/pages/filmpage/?id=' + item.id)
+        }
     }
 }
 
@@ -71,7 +74,7 @@ fetch(base_url + '/movie/now_playing?language=ru', {
         div.style.marginRight = 'none' 
         img.src =`https://image.tmdb.org/t/p/w500${item.backdrop_path}` 
         h1.innerHTML = item.title
-        hover.dataset.move_id = item.id
+        div.dataset.move_id = item.id
 
         h1.classList.add('h1_post_new2')
         hover.classList.add('hover_img2')
@@ -80,10 +83,26 @@ fetch(base_url + '/movie/now_playing?language=ru', {
         place.append(div)
         div.append(img, h1, hover)
         hover.append(button)
+
+        div.onclick = () => {
+            let id_move = 0
+            hover_img2.forEach(el => el.style.opacity = '1')
+            id_move = div.getAttribute('data-move_id')
+            div.style.opacity = '1'
+            fetch(base_url + '/movie/' + id_move +'/videos', {
+                headers: {
+                    Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
+                }
+            }).then(res => res.json())
+              .then(res => {
+                let rnd = Math.floor(Math.random() * res.results.length)
+                youtube.src = `https://www.youtube.com/embed/${res.results[0].key}`
+              })
+        }
+
     }
 }
 
-// let id_move = 0
 
 // let hover_img2 = document.querySelectorAll('.hover_img2')
 // let yt_ss = 'https://www.youtube.com/embed/'
@@ -109,7 +128,7 @@ fetch(base_url + '/movie/now_playing?language=ru', {
   let tr_h1 = document.querySelector('.tr_h1')
   let tr_header = document.querySelector('.tr_header')
   let youtube = document.querySelector('.youtube')
-
+    console.log(hover_img2);
   hover_img2.forEach(btn => {
       btn.onclick = () => {
           hover_img2.forEach(el => el.style.opacity = '1')
@@ -210,6 +229,6 @@ function reload5(arr, place) {
         h2.classList.add('h2_post_new5')
         div.classList.add('place_img5')
         place.append(div)
-        div.append(h1, h2)
+        div.append(h2, h1)
     }
 }
