@@ -174,7 +174,7 @@ function reload3(arr, place){
         button.classList.add('open_card_f')
         vote_average.classList.add('vote_average')
         vote_average_h1.classList.add('vote_average_h1')
-        cont3.append(div)
+        place.append(div)
         div.append(img, hover, h1, vote_average)
         hover.append(button)
         vote_average.append(vote_average_h1)
@@ -232,3 +232,25 @@ function reload5(arr, place) {
         div.append(h2, h1)
     }
 }
+import { openModal } from "./modules/header"
+let modal = document.querySelector('.modal')
+let btns_open = document.querySelector('.search')
+let close_btns = document.querySelector('.modal__close')
+
+export function modalToggler(arr , callBack){
+    arr.forEach(btn =>  {
+        btn.onclick = () => {
+            callBack()
+        }
+    })
+}
+
+
+
+function closeModal() {
+    modal.classList.remove('fade', 'show')
+    document.querySelector('body').style.overflow = 'scroll'
+}
+
+
+modalToggler([close_btns], closeModal)
