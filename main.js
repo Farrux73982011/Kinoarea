@@ -7,6 +7,17 @@ let cont3 = document.querySelector('.container3')
 let cont5 = document.querySelector('.container5')
 let cont4 = document.querySelector('.container4')
 let img_post_new = document.querySelectorAll('.img_post_new')
+
+
+fetch(base_url + '/genre/movie/list?language=ru', {
+    headers: {
+        Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
+    }
+})  .then(res => res.json())
+    .then(res => {
+        console.log(res);
+        reloadgen(res.genres)
+    })
 fetch(base_url + '/movie/now_playing?language=ru', {
     headers: {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
@@ -47,6 +58,12 @@ function reload(arr, place) {
         div.append(img, hover, h1, vote_average)
         hover.append(button)
         vote_average.append(vote_average_h1)
+
+        let joker = document.querySelector('.joker')
+
+        div.onmouseenter = () => {
+            joker.src = `https://image.tmdb.org/t/p/original${item.backdrop_path}`
+        }
 
         div.onclick = () => {
             location.assign('/pages/filmpage/?id=' + item.id)
@@ -99,29 +116,8 @@ fetch(base_url + '/movie/now_playing?language=ru', {
                 youtube.src = `https://www.youtube.com/embed/${res.results[0].key}`
               })
         }
-
     }
 }
-
-
-// let hover_img2 = document.querySelectorAll('.hover_img2')
-// let yt_ss = 'https://www.youtube.com/embed/'
-// let tr_h1 = document.querySelector('.tr_h1')
-// let tr_header = document.querySelector('.tr_header')
-
-// hover_img2.forEach(btn => {
-//     btn.onclick = () => {
-//         id_move = btn.getAttribute('data-move_id')
-//     }
-// });
-
-// fetch(base_url + '/movie/' + id_move +'?api_key=790c95e0985a2e338aea850a76b8ebda&append_to_response=videos', {
-//     headers: {
-//         Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
-//     }
-// }).then(res => res.json())
-//   .then(res => console.log(res))
-
 
   let hover_img2 = document.querySelectorAll('.hover_img2')
   let yt_ss = 'https://www.youtube.com/embed/'
@@ -139,7 +135,10 @@ fetch(base_url + '/movie/now_playing?language=ru', {
                   Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
               }
           }).then(res => res.json())
-            .then(res => youtube.src = `https://www.youtube.com/embed/${res.results[0].key}`)
+            .then(res => {
+                // tr_h1.innerHTML = res.results.title
+                youtube.src = `https://www.youtube.com/embed/${res.results[0].key}`
+            })
       }
   })
   
@@ -148,9 +147,9 @@ fetch(base_url + '/discover/movie?include_adult=false&include_video=false&langua
         Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
     }
 }).then(res => res.json())
-  .then(res => 	reload3(res.results.slice(0, 4)), cont3)
+  .then(res => 	reload3(res.results.slice(0, 4)))
 
-function reload3(arr, place){
+function reload3(arr){
     for (let item of arr) {
         let div = document.createElement('div')
         let img = document.createElement('img')
@@ -174,7 +173,7 @@ function reload3(arr, place){
         button.classList.add('open_card_f')
         vote_average.classList.add('vote_average')
         vote_average_h1.classList.add('vote_average_h1')
-        place.append(div)
+        cont3.append(div)
         div.append(img, hover, h1, vote_average)
         hover.append(button)
         vote_average.append(vote_average_h1)
@@ -232,25 +231,25 @@ function reload5(arr, place) {
         div.append(h2, h1)
     }
 }
-import { openModal } from "./modules/header"
 let modal = document.querySelector('.modal')
-let btns_open = document.querySelector('.search')
 let close_btns = document.querySelector('.modal__close')
 
-export function modalToggler(arr , callBack){
-    arr.forEach(btn =>  {
-        btn.onclick = () => {
-            callBack()
-        }
-    })
-}
-
-
-
-function closeModal() {
+close_btns.onclick = () => {
     modal.classList.remove('fade', 'show')
     document.querySelector('body').style.overflow = 'scroll'
 }
 
 
-modalToggler([close_btns], closeModal)
+
+let all_h1_now = document.querySelector('.galvall_h1_now')
+
+function reloadgen(arr) {
+    for (let item of arr) {
+        let h1 = document.createElement('h1')
+
+        h1.innerHTML = item.name
+        h1.classList.add('alllb')
+
+        all_h1_now.append(h1)
+    }
+}

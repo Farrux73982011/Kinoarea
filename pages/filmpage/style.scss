@@ -13,6 +13,7 @@
     font-weight: 600;
   }
   header{
+    margin-top: -1000px;
     display: flex;
     margin-top: 25px;
     margin-bottom: 53px;
@@ -209,4 +210,13 @@ line-height: normal;
     font-size: 12px;
     color: #fff;
   }
+}
+.joker{
+  z-index: -1;
+  margin-bottom: -848px;
+  background-color: #0000004d;
+  width: 1651px;
+  margin-left: -200px;
+  transition: .5s linear;
+  background: linear-gradient(transparent,#1E2538);
 }

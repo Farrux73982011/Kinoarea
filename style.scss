@@ -2,8 +2,16 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
+.joker{
+  background-color: #0000004d;
+  width: 1651px;
+  height: 100vhw;
+  margin-left: -200px;
+  transition: .5s linear;
+  background: linear-gradient(transparent,#1E2538);
+}
 body{
   padding-left: 200px;
   padding-right: 200px;
@@ -14,7 +22,7 @@ h1{
 }
 header{
   display: flex;
-  margin-top: 25px;
+  margin-top: -850px;
   margin-bottom: 53px;
 }
 .icon{
@@ -85,6 +93,8 @@ height: 24px;
 }
 .img_post_new{
   width: 250px;
+  height: 375px;
+  height: 1;
   border-radius: 10px;
   border: none;
   z-index: 1;
@@ -92,6 +102,7 @@ height: 24px;
 .header_down{
   align-items: center;
   display: flex;
+  margin-bottom: 40px;
 }
 .alll{
   color: rgba(255, 255, 255, 0.35);
@@ -99,8 +110,11 @@ height: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  margin-right: 10px;
 }
 .active{
+  background: rgba(0,0,0,.3450980392) !important;
+  opacity: 1 !important;
   color: #fff !important;
 }
 .show_all{
@@ -135,8 +149,41 @@ height: 24px;
   font-size: 18px;
   font-weight: 700;
 }
+.galvall_h1_now{
+  width: 765px;
+  overflow-x: scroll;
+  padding: none;
+  white-space: nowrap;
+  display: flex;
+  margin-top: 10px;
+  padding: 10px 0 10px 0;
+  justify-content: space-between;
+}
+.alllb{
+  color: #fff;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-right: 10px;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+.galvall_h1_now::-webkit-scrollbar {
+  height: 8px;
+}
+.galvall_h1_now::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #1B2133;
+}
+.galvall_h1_now::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #3657CB;
+}
 .all_h1_now{
   width: 765px;
+  overflow-x: scroll;
   padding: none;
   display: flex;
   margin-top: 10px;
@@ -144,7 +191,7 @@ height: 24px;
 }
 .now_h1{
   color: #FFF;
-  font-size: 47px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 900;
   line-height: normal;
@@ -200,10 +247,11 @@ height: 24px;
   padding: 0;
   display: flex;
   margin-top: 24px;
+  margin-bottom: 20px;
   align-items: center;
 }
 .trailers_h1{
-  margin-right: 634px;
+  margin-right: 615px;
   color: #FFF;
   font-size: 47px;
   font-style: normal;
@@ -216,7 +264,7 @@ height: 24px;
   display: flex;
   justify-content: space-between;
   color: #FFF;
-  font-size: 22px;
+  font-size: 20px;
   font-style: normal;
   text-decoration: none;
   font-weight: 700;
@@ -229,7 +277,7 @@ height: 24px;
 }
 
 .container2{
-  width: 1000px;
+  width: 1210px;
   padding: 0 19px 19px 0;
   overflow-x: auto;
   overflow-y: hidden;
@@ -289,10 +337,10 @@ height: 24px;
   background: #3657CB;
 }
 .youtube{
-  width: 1230px;
+  width: 1213px;
   border-radius: 10px;
   border: none;
-  height: 700px;
+  height: 620px;
 }
 
 .tr_header{
@@ -377,7 +425,7 @@ height: 24px;
 }
 .popfl{
   color: #FFF;
-  font-size: 34px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 900;
   line-height: normal;
@@ -425,17 +473,20 @@ height: 24px;
   display: flex;
 }
 .news_hh1{
-  margin-right: 659px;
+  margin-right: 724px;
   margin-top: 30px;
 }
 .new_img{
-border-radius: 10px;
+  width: 1051.56px;
+  height: 600px;
+  margin-top: -30px;
+  border-radius: 10px;
 }
 footer{
   margin-top: 98px;
   padding-left: 75px;
   padding-top: 98px;
-  width: 1500px;
+  width: 1650px;
   margin-left: -300px;
   margin-right: -300px;
   background-color: #151A26;
@@ -560,11 +611,8 @@ margin-bottom: 0px;
 	position: relative;
 	width: 100%;
 	padding: 40px;
-  // background: #1E2538;
-	// border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 4px;
 	max-height: 80vh;
-	overflow-y: auto;
 }
 .modal__close {
 	position: absolute;

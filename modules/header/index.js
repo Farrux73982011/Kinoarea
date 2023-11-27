@@ -61,12 +61,10 @@ midle.append(afisha, media, film, actors, news, podborki, category)
 right.append(search, sign_in)
 search.append(search_img)
 
-import { modalToggler } from "../../main"
 let modal = document.querySelector('.modal')
 
-export function openModal() {
+search.onclick = () => {
     modal.classList.add('fade', 'show')
     modal.classList.remove('hide')
     document.querySelector('body').style.overflow = 'hidden'
 }
-modalToggler([search], openModal)
