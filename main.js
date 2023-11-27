@@ -29,6 +29,14 @@ fetch(base_url + '/movie/now_playing?language=ru', {
         reload(res.results, cont)
     }
    )
+   fetch(base_url + '/discover/movie?include_adult=false&include_video=false&language=ru&page=1&sort_by=popularity.desc', {
+    headers: {
+        Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
+    }
+}).then(res => res.json())
+  .then(res => 	{reload3(res.results.slice(0, 4))
+    console.log(res);
+})
 
 function reload(arr, place) {
     for (let item of arr) {
@@ -62,7 +70,7 @@ function reload(arr, place) {
         let joker = document.querySelector('.joker')
 
         div.onmouseenter = () => {
-            joker.src = `https://image.tmdb.org/t/p/original${item.backdrop_path}`
+            document.querySelector('body').style.background = `url('https://image.tmdb.org/t/p/original${item.backdrop_path}')`
         }
 
         div.onclick = () => {
@@ -113,7 +121,7 @@ fetch(base_url + '/movie/now_playing?language=ru', {
             }).then(res => res.json())
               .then(res => {
                 let rnd = Math.floor(Math.random() * res.results.length)
-                youtube.src = `https://www.youtube.com/embed/${res.results[0].key}`
+                youtube.src = `https://www.youtube.com/embed/${res.results[rnd].key}`
               })
         }
     }
@@ -142,12 +150,7 @@ fetch(base_url + '/movie/now_playing?language=ru', {
       }
   })
   
-fetch(base_url + '/discover/movie?include_adult=false&include_video=false&language=ru&page=1&sort_by=popularity.desc', {
-    headers: {
-        Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
-    }
-}).then(res => res.json())
-  .then(res => 	reload3(res.results.slice(0, 4)))
+
 
 function reload3(arr){
     for (let item of arr) {
