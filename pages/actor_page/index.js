@@ -14,7 +14,7 @@ fetch(base_url3 + id + '?language=ru', {
     })
 
 function reloadActor(arr, place) {
-    title.innerHTML = arr.also_known_as[0]
+    title.innerHTML = arr.name
     let poster = document.createElement('img')
     let div = document.createElement('div')
     let title_ac = document.createElement('h1')
@@ -40,7 +40,7 @@ function reloadActor(arr, place) {
     }
 
     poster.src = `https://image.tmdb.org/t/p/w500${arr.profile_path}`
-    title_ac.innerHTML = arr.also_known_as[0]
+    title_ac.innerHTML = arr.name
     min_t_ac.innerHTML = arr.name
     info.innerHTML = 'Информация'
     biograf.innerHTML = 'Биография'
