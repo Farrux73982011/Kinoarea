@@ -27,14 +27,12 @@ export function reload(arr, place) {
         hover.append(button)
         vote_average.append(vote_average_h1)
 
-        let joker = document.querySelector('.joker')
-
-        div.onmouseenter = () => {
-            joker.src = `https://image.tmdb.org/t/p/original${item.backdrop_path}`
-        }
-
         div.onclick = () => {
-            location.assign('/pages/filmpage/?id=' + item.id)
+            // location.assign('/pages/filmpage/?id=' + item.id, '_blank')
+            window.open(
+                '/pages/filmpage/?id=' + item.id,
+                '_blank'
+              );
         }
     }
 }

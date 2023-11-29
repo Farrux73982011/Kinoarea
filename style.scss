@@ -60,7 +60,8 @@ header {
   gap: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .hover_img {
@@ -109,6 +110,7 @@ header {
 }
 
 .header_down {
+  justify-content: center;
   align-items: center;
   display: flex;
   margin-bottom: 40px;
@@ -405,8 +407,9 @@ header {
 }
 
 .container3 {
+  gap: 20px;
+  width: 70%;
   display: flex;
-  justify-content: space-between;
 }
 
 .container4 {

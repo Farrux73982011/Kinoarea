@@ -1,6 +1,7 @@
 let base_url2 = "https://api.themoviedb.org/3/movie/"
 let id = location.search.split('=').at(-1)
 import Chart from 'chart.js/auto';
+import { reload } from '/modules/card';
 let title = document.querySelector('title')
 let text1 = document.querySelector('.text1')
 let text2 = document.querySelector('.text2')
@@ -10,6 +11,9 @@ let div_1_1 = document.querySelector('.div_1_1')
 let people = document.querySelector('.people')
 let rate = document.querySelector('.rate')
 let joker = document.querySelector('.joker')
+let actors_div = document.querySelector('.actors_div')
+let posters_div = document.querySelector('.posters_div')
+let cadr_div = document.querySelector('.cadr_div')
 
 fetch(base_url2 + id + '?language=ru', {
 		headers: {
@@ -20,6 +24,7 @@ fetch(base_url2 + id + '?language=ru', {
 
 function reload7(item) {
 	title.innerHTML = item.title
+	document.querySelector('.name_cadr').innerHTML = item.title
 
 	let poster = document.createElement('img')
 	let imdb = document.createElement('h1')
@@ -28,6 +33,7 @@ function reload7(item) {
 	let logo = document.createElement('h1')
 	let logo2 = document.createElement('h1')
 	logo.innerHTML = item.title
+	let a = document.createElement('a')
 	logo2.innerHTML = item.original_title
 
 	document.querySelector('body').style.background = `url('https://image.tmdb.org/t/p/original${item.backdrop_path}')`
@@ -40,7 +46,9 @@ function reload7(item) {
 	description.innerHTML = item.overview.slice(0, 500)
 	let button = document.createElement('button')
 	let img_watch = document.createElement('img')
-	button.innerHTML = 'Смотреть трейлер'
+	a.innerHTML = 'Смотреть трейлер'
+	a.href = '#youtube'
+	a.classList.add('watch_a')
 	img_watch.src = '/public/icon/watch.svg'
 	button.prepend(img_watch)
 
@@ -52,6 +60,7 @@ function reload7(item) {
 	logo2.classList.add('logo2')
 
 	div_1_1.append(description, button)
+	button.append(a)
 	const data = {
 
 		datasets: [{
@@ -128,6 +137,7 @@ function reload7(item) {
 	// homepage.append(home_a)
 	text1.append(homepage, belong, tagline, budget, genres, originallang, titles, org_title)
 	text2.append(voteave, popularity, status, spoke_lang, runtime, release_date, product_comp, product_coun)
+
 }
 
 let youtube = document.querySelector('.youtube2')
@@ -139,7 +149,119 @@ fetch(base_url2 + id + '?api_key=790c95e0985a2e338aea850a76b8ebda&append_to_resp
 	}).then(res => res.json())
 	.then(res => {
 		let rnd = Math.floor(Math.random() * res.videos.results.length)
-		console.log(res);
 		youtube.src = `https://www.youtube.com/embed/${res.videos.results[rnd].key}`
 	  })
 
+fetch(base_url2 + id + '/credits', {
+	headers: {
+		Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
+	}
+}).then(res => res.json())
+.then(res => {
+	let cast = res.cast
+	reloadactors(cast.slice(0, 10))
+})
+
+function reloadactors(arr) {
+	for(let item of arr){
+		let div = document.createElement('div')
+		let img = document.createElement('img')
+		let h1 = document.createElement('h1')
+		let h2 = document.createElement('h2')
+
+		img.src = `https://image.tmdb.org/t/p/w500${item.profile_path}`
+		h1.innerHTML = item.name
+		h2.innerHTML = item.character
+
+		div.classList.add('actor')
+
+		div.append(img, h1, h2)
+		actors_div.append(div)
+
+		div.onclick = () => {
+            // location.assign('/pages/filmpage/?id=' + item.id, '_blank')
+            window.open(
+                '/pages/actor_page/?id=' + item.id,
+                '_blank'
+              );
+        }
+	}
+}
+
+fetch(base_url2 + id + '/images', {
+	headers: {
+		Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
+	}
+}).then(res => res.json())
+.then(res => {
+	reloadposter(res.posters)
+	reloadbg(res.backdrops)
+})
+
+function reloadposter(arr) {
+		let rnd = Math.floor(Math.random() * arr.length)
+		let rnd2 = Math.floor(Math.random() * arr.length)
+		let rnd3 = Math.floor(Math.random() * arr.length)
+		let rnd4 = Math.floor(Math.random() * arr.length)
+		let img = document.createElement('img')
+		let img2 = document.createElement('img')
+		let img3 = document.createElement('img')
+		let img4 = document.createElement('img')
+
+		img.classList.add('posters')
+		img2.classList.add('posters')
+		img3.classList.add('posters')
+		img4.classList.add('posters')
+		img.src = `https://image.tmdb.org/t/p/w500${arr[rnd].file_path}`
+		img2.src = `https://image.tmdb.org/t/p/w500${arr[rnd2].file_path}`
+		img3.src = `https://image.tmdb.org/t/p/w500${arr[rnd3].file_path}`
+		img4.src = `https://image.tmdb.org/t/p/w500${arr[rnd4].file_path}`
+
+		posters_div.append(img, img2, img3, img4)
+}
+function reloadbg(arr) {
+	let rnd = Math.floor(Math.random() * arr.length)
+	let rnd2 = Math.floor(Math.random() * arr.length)
+	let rnd3 = Math.floor(Math.random() * arr.length)
+	let rnd4 = Math.floor(Math.random() * arr.length)
+	let rnd5 = Math.floor(Math.random() * arr.length)
+	let rnd6 = Math.floor(Math.random() * arr.length)
+	let div_up = document.createElement('div')
+	let div_down = document.createElement('div')
+	let img_up1 = document.createElement('div')
+	let img_up2 = document.createElement('div')
+	let img_up3 = document.createElement('div')
+	let img_down1 = document.createElement('div')
+	let img_down2 = document.createElement('div')
+	let img_down3 = document.createElement('div')
+
+	img_up1.style.background = `url('https://image.tmdb.org/t/p/original${arr[rnd].file_path}')`
+	img_up2.style.background = `url('https://image.tmdb.org/t/p/original${arr[rnd2].file_path}')`
+	img_up3.style.background = `url('https://image.tmdb.org/t/p/original${arr[rnd3].file_path}')`
+	img_down1.style.background = `url('https://image.tmdb.org/t/p/original${arr[rnd4].file_path}')`
+	img_down2.style.background = `url('https://image.tmdb.org/t/p/original${arr[rnd5].file_path}')`
+	img_down3.style.background = `url('https://image.tmdb.org/t/p/original${arr[rnd6].file_path}')`
+
+	div_up.classList.add('div_up')
+	div_down.classList.add('div_down')
+	img_up1.classList.add('img_up1')
+	img_up2.classList.add('img_up2')
+	img_up3.classList.add('img_up3')
+	img_down1.classList.add('img_down1')
+	img_down2.classList.add('img_down2')
+	img_down3.classList.add('img_down3')
+
+	cadr_div.append(div_up, div_down)
+	div_up.append(img_up1, img_up2, img_up3)
+	div_down.append(img_down1, img_down2, img_down3)
+}
+let similar_div = document.querySelector('.similar_div')
+fetch(base_url2 + id + '/similar?language=en-US&page=1', {
+	headers: {
+		Authorization: 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw'
+	}
+}).then(res => res.json())
+	.then(res => {
+		console.log(res);
+		reload(res.results.splice(0, 4), similar_div)
+	})
