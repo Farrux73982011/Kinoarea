@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button>
+        login
+    </button>
+    <button id="confirm">
+        confirm
+    </button>
+
+    <img src="" alt="">
+    <h1></h1>
+
+    <script>
+        const API_KEY =
+            "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3OTBjOTVlMDk4NWEyZTMzOGFlYTg1MGE3NmI4ZWJkYSIsInN1YiI6IjY1NTYwNTAzNjdiNjEzNDVkYmMxMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8vyyF9E6X99GgYd-5H6vLMKAn9jq7ik3ze9-zfOwsQw"
+        let loginBtn = document.querySelector('button')
+        let confirmBtn = document.querySelector('#confirm')
+        let userIMG = document.querySelector('img')
+        let userFullName = document.querySelector('h1')
+        let reqToken = ''
+
+        loginBtn.onclick = () => {
+            fetch('https://api.themoviedb.org/4/auth/request_token', {
+                    method: 'POST',
+                    dataType: 'json',
+                    headers: {
+                        Authorization: `Bearer ${API_KEY}`,
+                        'Content-Type': "application/json"
+                    },
+                    start_time: new Date().getTime()
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        reqToken = res.request_token
+                        console.log(reqToken);
+                        window.open(`https://www.themoviedb.org/auth/access?request_token=${res.request_token}`)
+                    }
+                })
+        }
+        confirmBtn.onclick = () => {
+            fetch(`https://api.themoviedb.org/4/auth/access_token`, {
+                    method: 'POST',
+                    dataType: 'json',
+                    headers: {
+                        Authorization: `Bearer ${API_KEY}`,
+                        'Content-Type': "application/json"
+                    },
+                    body: JSON.stringify({
+                        request_token: reqToken
+                    }),
+                    start_time: new Date().getTime()
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        localStorage.setItem('user_auth', JSON.stringify(res))
+                        location.reload()
+                    }
+                })
+        }
+        let user_auth = JSON.parse(localStorage.getItem('user_auth')) || null
+
+        if (user_auth) {
+            fetch(`https://api.themoviedb.org/3/account/${user_auth?.account_id}`, {
+                    headers: {
+                        Authorization: `Bearer ${API_KEY}`,
+                        'Content-Type': "application/json"
+                    },
+                })
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res)
+                    userIMG.src = `https://www.gravatar.com/avatar/${res.avatar.gravatar.hash}`
+                    userFullName.innerHTML = res.username 
+                })
+        }
+    </script>
+</body>
+
+</html>
+<!-- 
+<script>
+    // var api_host = 'http://api.dev';
+    // var web_host = 'http://web.dev';
+    
+    var api_host = 'https://api.themoviedb.org';
+    var web_host = 'https://www.themoviedb.org';
+    
+    var requestToken = '';
+    
+    function getApiReadAccessToken() {
+      return $('#api_read_access_token').val();
+    }
+    
+    function showError(response) {
+      $('#error').html(JSON.stringify(response.responseJSON));
+      $('#response').html('');
+    }
+    
+    function showResponse(response, time) {
+      $('#error').html('');
+      $('#response').html(JSON.stringify(response));
+      $('#response_title span').html('(' + time + 'ms)')
+    }
+    
+    function hideAccountData() {
+      $('#account_info').addClass('hide');
+      $('#access_token').html('-');
+    }
+    
+    function showAccountData(access_token, account_id) {
+      $('#account_info').removeClass('hide');
+      $('#access_token').html(access_token);
+      $('#account_id').html(account_id);
+    }
+    
+    function getRequestToken() {
+      hideAccountData();
+    
+      $.ajax({
+        url: api_host + '/4/auth/request_token',
+        method: 'POST',
+        dataType: 'json',
+        headers: {
+          'Authorization': 'Bearer ' + getApiReadAccessToken(),
+          'Content-Type': 'application/json'
+        },
+        start_time: new Date().getTime()
+      }).error(function(response) {
+        showError(response);
+      }).fail(function(response) {
+        showError(response);
+      }).done(function(response) {
+        showResponse(response, (new Date().getTime() - this.start_time));
+    
+        if (response.success) {
+          requestToken = response.request_token
+          $('#approveRequestToken').removeClass('hide');
+          $('#getAccessToken').removeClass('hide');
+        }
+      });
+    }
+    
+    function getAccessToken() {
+      $.ajax({
+        url: api_host + '/4/auth/access_token',
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + getApiReadAccessToken(),
+          'Content-Type': 'application/json'
+        },
+        dataType: 'json',
+        data: JSON.stringify({ request_token: requestToken }),
+        start_time: new Date().getTime()
+      }).error(function(response) {
+        showError(response);
+      }).fail(function(response) {
+        showError(response);
+      }).done(function(response) {
+        showResponse(response, (new Date().getTime() - this.start_time));
+        showAccountData(response.access_token, response.account_id);
+      });
+    }
+    
+    $(document).ready(function() {
+      $('#getRequestToken').on('click', function() {
+        getRequestToken();
+      });
+    
+      $('#approveRequestToken').on('click', function() {
+        window.open(web_host + '/auth/access?request_token=' + requestToken);
+      });
+    
+      $('#getAccessToken').on('click', function() {
+        getAccessToken();
+      });
+    
+    });
+</script>
+ -->

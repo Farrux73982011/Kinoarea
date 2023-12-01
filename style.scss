@@ -810,3 +810,18 @@ footer {
   padding: 0;
   border: none;
 }
+.div_user{
+  align-items: center;
+  display: flex;
+}
+.img_user{
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 30px;
+  width: 40px;
+  height: 40px;
+}
+.name_user{
+  font-size: 20px;
+  color: #FFF;
+}

@@ -94,7 +94,7 @@
 .container_people{
     display: flex;
     padding: 20px;
-    width: 100%;
+    width: 90%;
     height: 600px;
     border-radius: 10px;
     background: #191E2E;
@@ -119,10 +119,135 @@
     color: #fff;
     width: 60%;
 }
+.settings{
+  color: #FFF;
+font-size: 14px;
+  width: 140px;
+height: 50px;
+  border: none;
+  border-radius: 10px;
+background: #1E2538;
+}
+.no_bio{
+  display: none;
+  margin-top: 30px;
+  color: #fff;
+  width: 100%;
+  font-size: small;
+}
 .spanss_div{
     margin-top: 30px;
 }
 .spanss{
     color: #FFF;
     font-size: 20px;
+}
+.div_user{
+  align-items: center;
+  display: flex;
+}
+.img_user{
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 30px;
+  width: 40px;
+  height: 40px;
+}
+.name_user{
+  font-size: 20px;
+  color: #FFF;
+}
+.div_page{
+  width: 100%;
+  display: flex;
+  height: fit-content;
+}
+.panels{
+  justify-content: center;
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  height: 77px;
+  width: 100%;
+  border-radius: 10px;
+background: #191E2E;
+}
+.panel_div{
+  width: 5%;
+  margin-right: 10px;
+}
+.active_panel{
+background: #3657CB !important;
+}
+.modal {
+  position: fixed;
+  top: 90px;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  backdrop-filter: blur(3px);
+}
+
+.modal__dialog {
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.modal__content {
+  background: #1E2538;
+  position: relative;
+  width: 100%;
+  padding: 40px;
+  border-radius: 4px;
+  max-height: 80vh;
+}
+
+.modal__close {
+  font-size: 60px;
+  color: #fff;
+  width: 20px;
+  margin-top: -50px;
+  margin-left: 800px;
+  font-weight: 500;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.modal__title {
+  text-align: center;
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+.modal .btn {
+  display: block;
+  width: 280px;
+  margin: 0 auto;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.1;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
